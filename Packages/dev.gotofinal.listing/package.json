@@ -1,0 +1,12 @@
+{
+  "name": "dev.gotofinal",
+  "displayName": "GotoFinal Scripts",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Placeholder project for the listing page.",
+  "vrchatVersion": "2022.1.1",
+  "author": {
+    "name": "GotoFinal",
+    "email": "gotofinal@gotofinal.com"
+  }
+}
