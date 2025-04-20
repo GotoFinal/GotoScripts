@@ -2,6 +2,11 @@ name: Build Release
 
 on: 
   workflow_dispatch:
+    inputs:
+      PACKAGE_NAME:
+        description: 'Name of the package to release'
+        required: true
+        type: string
 
 jobs:
 
@@ -16,7 +21,7 @@ jobs:
     - name: Validate Package Config
       id: config_package
       run: |
-        if [ "${{ vars.PACKAGE_NAME }}" != "" ]; then
+        if [ "${{ inputs.PACKAGE_NAME }}" != "" ]; then
           echo "configPackage=true" >> $GITHUB_OUTPUT;
         else
           echo "configPackage=false" >> $GITHUB_OUTPUT;
@@ -30,7 +35,7 @@ jobs:
     permissions:
       contents: write
     env:
-      packagePath: Packages/${{ vars.PACKAGE_NAME }}
+      packagePath: Packages/${{ inputs.PACKAGE_NAME }}
     if: needs.config.outputs.config_package == 'true'
     steps:
 
@@ -49,8 +54,8 @@ jobs:
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
         run: |
-          echo "zipFile=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}".zip >> $GITHUB_ENV
-          echo "unityPackage=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}.unitypackage" >> $GITHUB_ENV
+          echo "zipFile=${{ inputs.PACKAGE_NAME }}-${{ steps.version.outputs.value }}".zip >> $GITHUB_ENV
+          echo "unityPackage=${{ inputs.PACKAGE_NAME }}-${{ steps.version.outputs.value }}.unitypackage" >> $GITHUB_ENV
           echo "version=${{ steps.version.outputs.value }}" >> $GITHUB_ENV
 
       # Zip the Package for release
@@ -74,7 +79,7 @@ jobs:
         id: tag_version
         uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
         with:
-          tag: "${{ env.version }}"
+          tag: "${{ inputs.PACKAGE_NAME }}-${{ env.version }}"
       
       # Publish the Release to GitHub
       - name: Make Release
@@ -84,4 +89,4 @@ jobs:
             ${{ env.zipFile }}
             ${{ env.unityPackage }}
             ${{ env.packagePath }}/package.json
-          tag_name: ${{ env.version }}
+          tag_name: "${{ inputs.PACKAGE_NAME }}-${{ env.version }}"
