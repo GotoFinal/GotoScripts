@@ -1,12 +1,10 @@
 {
-    "name": "dev.gotofinal.optimizer-control.Editor",
+    "name": "dev.gotofinal.optimizer-control",
     "rootNamespace": "",
     "references": [
-        "GUID:62ced99b048af7f4d8dfe4bed8373d76",
-        "GUID:51958d58d31b37a44a20caa435b66f28"
+        "GUID:62ced99b048af7f4d8dfe4bed8373d76"
     ],
     "includePlatforms": [
-        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

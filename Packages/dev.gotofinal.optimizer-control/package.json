@@ -1,7 +1,7 @@
 {
   "name": "dev.gotofinal.optimizer-control",
   "displayName": "Optimize only on Upload",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "unity": "2022.3",
   "description": "Makes popular optimizers only work on upload or when explictly requested. Makes going into play mode much quicker. See Tools/GotTools for extra controls.",
   "vrchatVersion": "2022.1.1",

@@ -1,25 +1,32 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using GotoFinal.OptimizerSkip.Editor;
+using GotoFinal.OptimizerControl.Editor;
 using nadena.dev.ndmf;
 using UnityEditor;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 [assembly: ExportsPlugin(
     typeof(OptimizerSkip)
 )]
 
-namespace GotoFinal.OptimizerSkip.Editor
+namespace GotoFinal.OptimizerControl.Editor
 {
     public class OptimizerSkip : Plugin<OptimizerSkip>
     {
         private const string SkipKey = "SkipOptimizingOnPlayMode";
+        private const string ForceOppositeKey = "SkipOptimizingOnPlayModeForceOpposite";
         private const string BaseMenuPath = "Tools/GotTools/";
         private const string MenuPath = BaseMenuPath + "Skip Optimizing on play mode";
         internal static readonly List<string> KnownOptimizers = new() { "Anatawa12.AvatarOptimizer.TraceAndOptimize", "d4rkAvatarOptimizer" };
         internal static List<Type> optimizers = new();
-        internal static bool ForceOpposite;
+
+        internal static bool ForceOpposite
+        {
+            get => EditorPrefs.GetBool(ForceOppositeKey, false);
+            set => EditorPrefs.SetBool(ForceOppositeKey, value);
+        }
 
         protected override void Configure()
         {
@@ -59,7 +66,11 @@ namespace GotoFinal.OptimizerSkip.Editor
         internal static bool ShouldSkipOptimizer()
         {
             if (!EditorApplication.isPlayingOrWillChangePlaymode) return false;
-            return EditorPrefs.GetBool(SkipKey, true) ? !ForceOpposite : ForceOpposite;
+            bool setting = EditorPrefs.GetBool(SkipKey, true);
+            bool opposite = ForceOpposite;
+            bool result = setting ? !opposite : opposite;
+            Debug.Log("ShouldSkipOptimizer: " + result + ", setting: " + setting + ", forceOpposite: " + opposite);
+            return result;
         }
 
         [MenuItem(MenuPath, false, 1)]
@@ -104,7 +115,36 @@ namespace GotoFinal.OptimizerSkip.Editor
                 OptimizerSkip.ForceOpposite = false;
             }
 
-            foreach (var type in OptimizerSkip.optimizers)
+            var optimizersToDisable = new List<Type>(OptimizerSkip.optimizers);
+
+            var controls = context.AvatarRootObject.GetComponentsInChildren<OptimizerControl>( true);
+            foreach (var control in controls)
+            {
+                if (control.entries == null) continue;
+                foreach (var controlEntry in control.entries)
+                {
+                    if (!controlEntry.gameObject) continue;
+                    if (!controlEntry.filterEnabled)
+                    {
+                        Object.DestroyImmediate(controlEntry.gameObject);
+                        continue;
+                    }
+                    foreach (var componentEntry in controlEntry.components)
+                    {
+                        if (!componentEntry.component) continue;
+                        // if someone on purpose re-added one of components, then allow it
+                        if (!componentEntry.removeOnFastBuild && optimizersToDisable.Contains(componentEntry.component.GetType()))
+                        {
+                            optimizersToDisable.Remove(componentEntry.component.GetType());
+                            continue;
+                        }
+                        if (!componentEntry.removeOnFastBuild) continue;
+                        Object.DestroyImmediate(componentEntry.component);
+                    }
+                }
+            }
+
+            foreach (var type in optimizersToDisable)
             {
                 var optimizers = context.AvatarRootObject.GetComponentsInChildren(type, true);
                 foreach (var optimizer in optimizers)
