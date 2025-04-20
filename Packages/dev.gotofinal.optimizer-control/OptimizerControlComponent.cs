@@ -5,7 +5,7 @@ namespace GotoFinal.OptimizerControl
 {
     [ExecuteInEditMode]
     [AddComponentMenu("GotTools/Optimizer Control")]
-    public class OptimizerControl : MonoBehaviour
+    public class OptimizerControlComponent : MonoBehaviour
     {
         [System.Serializable]
         public class ComponentEntry

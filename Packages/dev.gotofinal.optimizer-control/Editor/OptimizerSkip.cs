@@ -117,7 +117,7 @@ namespace GotoFinal.OptimizerControl.Editor
 
             var optimizersToDisable = new List<Type>(OptimizerSkip.optimizers);
 
-            var controls = context.AvatarRootObject.GetComponentsInChildren<OptimizerControl>( true);
+            var controls = context.AvatarRootObject.GetComponentsInChildren<OptimizerControlComponent>( true);
             foreach (var control in controls)
             {
                 if (control.entries == null) continue;

@@ -23,7 +23,7 @@ namespace GotoFinal.ObjectRemover.Editor
     {
         protected override void Execute(BuildContext context)
         {
-            var removers = context.AvatarRootObject.GetComponentsInChildren<ObjectRemover>(true);
+            var removers = context.AvatarRootObject.GetComponentsInChildren<ObjectRemoverComponent>(true);
             var objectsToRemove = new List<GameObject>();
             foreach (var remover in removers)
             {

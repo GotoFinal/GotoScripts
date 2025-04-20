@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GotoFinal.ObjectRemover
 {
-    [CustomEditor(typeof(ObjectRemover))]
+    [CustomEditor(typeof(ObjectRemoverComponent))]
     internal class ObjectRemoverEditor : UnityEditor.Editor
     {
         private SerializedProperty prop_hideInHierarchy;
@@ -13,16 +13,16 @@ namespace GotoFinal.ObjectRemover
 
         private void OnEnable()
         {
-            prop_hideInHierarchy = serializedObject.FindProperty(nameof(ObjectRemover.hideInHierarchy));
-            prop_keepDisabled = serializedObject.FindProperty(nameof(ObjectRemover.keepDisabled));
-            prop_markAsEditorOnly = serializedObject.FindProperty(nameof(ObjectRemover.markAsEditorOnly));
-            prop_objectsToRemove = serializedObject.FindProperty(nameof(ObjectRemover.objectsToRemove));
+            prop_hideInHierarchy = serializedObject.FindProperty(nameof(ObjectRemoverComponent.hideInHierarchy));
+            prop_keepDisabled = serializedObject.FindProperty(nameof(ObjectRemoverComponent.keepDisabled));
+            prop_markAsEditorOnly = serializedObject.FindProperty(nameof(ObjectRemoverComponent.markAsEditorOnly));
+            prop_objectsToRemove = serializedObject.FindProperty(nameof(ObjectRemoverComponent.objectsToRemove));
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            var remover = (ObjectRemover)target;
+            var remover = (ObjectRemoverComponent)target;
 
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(prop_hideInHierarchy, new GUIContent("Hide In Hierarchy"));

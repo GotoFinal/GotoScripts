@@ -1,7 +1,7 @@
 {
   "name": "dev.gotofinal.crunch-begone",
   "displayName": "Crunch Begone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2022.3",
   "description": "Removes crunch compression from your project, it will be impossible to use it, crunch compression does not save vram and can cause lag spikes on avatar load while also looking really bad.",
   "vrchatVersion": "2022.1.1",

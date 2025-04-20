@@ -8,7 +8,7 @@ namespace GotoFinal.ObjectRemover
 {
     [ExecuteInEditMode]
     [AddComponentMenu("GotTools/Object Remover")]
-    public class ObjectRemover : MonoBehaviour
+    public class ObjectRemoverComponent : MonoBehaviour
     {
         public bool hideInHierarchy = true;
         public bool keepDisabled = true;
@@ -134,7 +134,7 @@ namespace GotoFinal.ObjectRemover
 
         private bool IsSafeToBeHidden(GameObject obj)
         {
-            return obj.GetComponentInChildren<ObjectRemover>(true) == null;
+            return obj.GetComponentInChildren<ObjectRemoverComponent>(true) == null;
         }
 #endif
     }

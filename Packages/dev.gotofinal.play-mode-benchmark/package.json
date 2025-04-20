@@ -1,7 +1,7 @@
 {
   "name": "dev.gotofinal.play-mode-benchmark",
   "displayName": "Play mode benchmark",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2022.3",
   "description": "Simple script to display time it took to enter play mode in logs.",
   "vrchatVersion": "2022.1.1",

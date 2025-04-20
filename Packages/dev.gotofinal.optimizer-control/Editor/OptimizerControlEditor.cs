@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GotoFinal.OptimizerControl.Editor
 {
-    [CustomEditor(typeof(OptimizerControl))]
+    [CustomEditor(typeof(OptimizerControlComponent))]
     public class OptimizerControlEditor : UnityEditor.Editor
     {
         SerializedProperty entriesProp;
@@ -18,7 +18,7 @@ namespace GotoFinal.OptimizerControl.Editor
         {
             serializedObject.Update();
 
-            var control = (OptimizerControl)target;
+            var control = (OptimizerControlComponent)target;
 
             EditorGUILayout.LabelField("List of objects/components to remove on fast build.", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("This should be a list of optimizer objects.", EditorStyles.boldLabel);
@@ -79,7 +79,7 @@ namespace GotoFinal.OptimizerControl.Editor
             GameObject newGo = (GameObject)EditorGUILayout.ObjectField(null, typeof(GameObject), true);
             if (newGo != null)
             {
-                var newEntry = new OptimizerControl.GameObjectEntry();
+                var newEntry = new OptimizerControlComponent.GameObjectEntry();
                 newEntry.gameObject = newGo;
                 newEntry.filterEnabled = false;
                 control.entries.Add(newEntry);
@@ -94,7 +94,7 @@ namespace GotoFinal.OptimizerControl.Editor
             serializedObject.ApplyModifiedProperties();
         }
 
-        void SyncComponents(OptimizerControl.GameObjectEntry entry)
+        void SyncComponents(OptimizerControlComponent.GameObjectEntry entry)
         {
             var go = entry.gameObject;
             if (go == null) return;
@@ -107,7 +107,7 @@ namespace GotoFinal.OptimizerControl.Editor
                 if (comp.GetType() == typeof(Transform)) continue;
                 if (!entry.components.Any(c => c.component == comp))
                 {
-                    entry.components.Add(new OptimizerControl.ComponentEntry
+                    entry.components.Add(new OptimizerControlComponent.ComponentEntry
                     {
                         component = comp,
                         removeOnFastBuild = true
