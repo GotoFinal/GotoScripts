@@ -1,76 +1,57 @@
-# VPM Package Template
+# My script collection
 
-Starter for making Packages, including automation for building and publishing them.
+This is small collection of Unity scripts I've made for vrchat to solve some small issues I had when creating avatars.  
 
-Once you're all set up, you'll be able to push changes to this repository and have .zip and .unitypackage versions automatically generated, and a listing made which works in the VPM for delivering updates for this package. If you want to make a listing with a variety of packages, check out our [template-package-listing](https://github.com/vrchat-community/template-package-listing) repo.
+※このドキュメント内の日本語翻訳はすべて自動翻訳です。  
+これは、VRChat用のアバターを作成する際に直面したいくつかの小さな問題を解決するために作成した、Unityスクリプトの小さなコレクションです。
 
-## ▶ Getting Started
+## Crunch Begone
+Simple script that automatically disables crunch compression on all assets. 
+Note that it makes using crunch basically impossible, but you should not be using crunch for avatar projects anyways.
+Crunch does not improve vram, and difference in download size is very small, while the quality is much worse and can cause extra lag spikes when loading the avatar.
 
-* Press [![Use This Template](https://user-images.githubusercontent.com/737888/185467681-e5fdb099-d99f-454b-8d9e-0760e5a6e588.png)](https://github.com/vrchat-community/template-package/generate)
-to start a new GitHub project based on this template.
-  * Choose a fitting repository name and description.
-  * Set the visibility to 'Public'. You can also choose 'Private' and change it later.
-  * You don't need to select 'Include all branches.'
-* Clone this repository locally using Git.
-  * If you're unfamiliar with Git and GitHub, [visit GitHub's documentation](https://docs.github.com/en/get-started/quickstart/git-and-github-learning-resources) to learn more.
-* Add the folder to Unity Hub and open it as a Unity Project.
-* After opening the project, wait while the VPM resolver is downloaded and added to your project.
-  * This gives you access to the VPM Package Maker and Package Resolver tools.
+全てのアセットに対してクランチ圧縮を自動的に無効化するシンプルなスクリプトです。
+このスクリプトを使うとクランチの使用はほぼ不可能になりますが、そもそもアバタープロジェクトではクランチを使うべきではありません。
+クランチはVRAMの節約にはならず、ダウンロードサイズの差もごくわずかです。その一方で画質が大幅に劣化し、アバターの読み込み時にラグの原因になることがあります。
 
-## 🚇 Migrating Assets Package
-Full details at [Converting Assets to a VPM Package](https://vcc.docs.vrchat.com/guides/convert-unitypackage)
+## Optimizer Control
+Automatically skips popular optimizer scripts like anatawa12/AvatarOptimizer and d4rkAvatarOptimizer when entering play mode, but still applying everything when uploading the avatar.  
+You can also change the default mode or make single-time build with optimziers enabled/disabled.  
+プレイモードに入るときに、anatawa12/AvatarOptimizer や d4rkAvatarOptimizer などの一般的な最適化スクリプトを自動的にスキップしますが、アバターのアップロード時にはすべて適用されます。
+デフォルトモードを変更したり、一度だけ最適化を有効／無効にしてビルドすることも可能です。  
+![image](https://github.com/user-attachments/assets/e5ca161b-e283-4044-b153-7bce84864217)  
 
-## ✏️ Working on Your Package
+Additionaly it has extra component to allow controlling any other tool manually, any object or component on this list will be removed at the very beginning of a build.  
+You can include here any tools that take long time to process that you don't need when just quickly testing avatar in Unity.  
+さらに、任意のツールを手動で制御できるコンポーネントも含まれています。このリストにあるオブジェクトやコンポーネントはビルドの最初に削除されます。
+Unityでアバターを素早くテストしたいときに、処理時間の長いツールをここに追加することができます。  
+![image](https://github.com/user-attachments/assets/e21ab678-e251-49aa-825e-f59cfe8bcb2c)
 
-* Delete the "Packages/com.vrchat.demo-template" directory or reuse it for your own package.
-  * If you reuse the package, don't forget to rename it and add generated meta files to your repository!
-* Update the `.gitignore` file in the "Packages" directory to include your package.
-  * For example, change `!com.vrchat.demo-template` to `!com.username.package-name`.
-  * `.gitignore` files normally *exclude* the contents of your "Packages" directory. This `.gitignore` in this template show how to *include* the demo package. You can easily change this out for your own package name.
-* Open the Unity project and work on your package's files in your favorite code editor.
-* When you're ready, commit and push your changes.
-* Once you've set up the automation as described below, you can easily publish new versions.
+This is example of my avatar when entering play with with all optimizations enabled:  
+すべての最適化を有効にした状態でプレイモードに入ったアバターの例：   
+![image](https://github.com/user-attachments/assets/b46a4062-60b6-4a79-bc72-0dfe99e1d2cb)  
+And with optimziers disabled + light control disabled:   
+最適化とライト制御を無効にした状態の例：   
+![image](https://github.com/user-attachments/assets/98a2df71-9836-4be3-9a69-dee4fbdb25d6)
 
-## 🤖 Setting up the Automation
+## Object remover
+Allows for removal of some objects or singular components on build while also hiding them from view in editor, this can either help you optimise the avatar with easy way to undo it or save a lot of build time by removing objects before other tools will try to process them.  
+This has small advantage over just removing the object that its easier to re-add it on prefab variants.  
+ビルド時に特定のオブジェクトやコンポーネントを削除し、エディタ内でも非表示にできるツールです。
+他のツールが処理を始める前に対象を削除できるので、アバターの最適化やビルド時間の短縮に役立ちます。
+また、オブジェクトを削除するよりもプレハブバリアントで再追加しやすい利点もあります。   
+![image](https://github.com/user-attachments/assets/5b2f18d9-eaf3-4d3e-9899-553337654b60)  
+The objects are also by default hidden from hierarchy view, just as if they would be removed:  
+削除されたように、オブジェクトはデフォルトでヒエラルキーにも表示されません：   
+![image](https://github.com/user-attachments/assets/556ccf67-d45d-4e16-945b-fd383d854d0d) ![image](https://github.com/user-attachments/assets/70a51837-76af-480a-9c72-a9e82223f811)
 
-Create a repository variable with the name and value described below.
-For details on how to create repository variables, see [Creating Configuration Variables for a Repository](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository).
-Make sure you are creating a **repository variable**, and not a **repository secret**.
+## PhysBones Scene Dirty Patch
+Small patch that patches vrchat PhysBones to not dirty whole scene when bone values are edited, its not needed and causes some other tools to re-scan whole project causing in-editor lag.  
+VRChatのPhysBonesの値を編集した際に、シーン全体が変更済み（Dirty）としてマークされるのを防ぐ小さなパッチです。
+これは本来不要であり、他のツールがプロジェクト全体を再スキャンしてエディタ内でのラグの原因になります。   
 
-* `PACKAGE_NAME`: the name of your package, like `com.vrchat.demo-template`.
+## Play mode benchmark
+The simple tool I use to measure how long it takes to enter play mode, example of log visible in section above about Optimizer Control.  
+プレイモードに入るまでの時間を測定するためのシンプルなツールです。 
+ログの例は上記の「Optimizer Control」セクションに表示されています。  
 
-Finally, go to the "Settings" page for your repo, then choose "Pages", and look for the heading "Build and deployment". Change the "Source" dropdown from "Deploy from a branch" to "GitHub Actions".
-
-That's it!
-Some other notes:
-* We highly recommend you keep the existing folder structure of this template.
-  * The root of the project should be a Unity project.
-  * Your packages should be in the "Packages" directory.
-  * If you deviate from this folder structure, you'll need to update the paths that assume your package is in the "Packages" directory on lines 24, 38, 41 and 57.
-* If you want to store and generate your web files in a folder other than "Website" in the root, you can change the `listPublicDirectory` item [here in build-listing.yml](.github/workflows/build-listing.yml#L17).
-
-## 🎉 Publishing a Release
-
-You can make a release by running the [Build Release](.github/workflows/release.yml) action. The version specified in your `package.json` file will be used to define the version of the release.
-
-## 📃 Rebuilding the Listing
-
-Whenever you make a change to a release - manually publishing it, or manually creating, editing or deleting a release, the [Build Repo Listing](.github/workflows/build-listing.yml) action will make a new index of all the releases available, and publish them as a website hosted fore free on [GitHub Pages](https://pages.github.com/). This listing can be used by the VPM to keep your package up to date, and the generated index page can serve as a simple landing page with info for your package. The URL for your package will be in the format `https://username.github.io/repo-name`.
-
-## 🏠 Customizing the Landing Page (Optional)
-
-The action which rebuilds the listing also publishes a landing page. The source for this page is in `Website/index.html`. The automation system uses [Scriban](https://github.com/scriban/scriban) to fill in the objects like `{{ this }}` with information from the latest release's manifest, so it will stay up-to-date with the name, id and description that you provide there. You are welcome to modify this page however you want - just use the existing `{{ template.objects }}` to fill in that info wherever you like. The entire contents of your "Website" folder are published to your GitHub Page each time.
-
-## 💻 Technical Stuff
-
-You are welcome to make your own changes to the automation process to make it fit your needs, and you can create Pull Requests if you have some changes you think we should adopt. Here's some more info on the included automation:
-
-### Build Release Action
-[release.yml](/.github/workflows/release.yml)
-
-This is a composite action combining a variety of existing GitHub Actions and some shell commands to create both a .zip of your Package and a .unitypackage. It creates a release which is named for the `version` in the `package.json` file found in your target Package, and publishes the zip, the unitypackage and the package.json file to this release.
-
-### Build Repo Listing
-[build-listing.yml](.github/workflows/build-listing.yml)
-
-This is a composite action which builds a vpm-compatible [Repo Listing](https://vcc.docs.vrchat.com/vpm/repos) based on the releases you've created. In order to find all your releases and combine them into a listing, it checks out [another repository](https://github.com/vrchat-community/package-list-action) which has a [Nuke](https://nuke.build/) project which includes the VPM core lib to have access to its types and methods. This project will be expanded to include more functionality in the future - for now, the action just calls its `BuildRepoListing` target.
