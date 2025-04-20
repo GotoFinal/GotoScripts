@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using GotoFinal.OptimizerSkip.Editor;
+using nadena.dev.ndmf;
+using UnityEditor;
+using Object = UnityEngine.Object;
+
+[assembly: ExportsPlugin(
+    typeof(OptimizerSkip)
+)]
+
+namespace GotoFinal.OptimizerSkip.Editor
+{
+    public class OptimizerSkip : Plugin<OptimizerSkip>
+    {
+        private const string SkipKey = "SkipOptimizingOnPlayMode";
+        private const string BaseMenuPath = "Tools/GotTools/";
+        private const string MenuPath = BaseMenuPath + "Skip Optimizing on play mode";
+        internal static readonly List<string> KnownOptimizers = new() { "Anatawa12.AvatarOptimizer.TraceAndOptimize", "d4rkAvatarOptimizer" };
+        internal static List<Type> optimizers = new();
+        internal static bool ForceOpposite;
+
+        protected override void Configure()
+        {
+            if (optimizers.Count == 0) FindOptimizers();
+            InPhase(BuildPhase.Resolving)
+                .BeforePlugin("dev.hai-vr.starmesh.ExecuteOperators")
+                .BeforePlugin("com.anatawa12.avatar-optimizer")
+                .BeforePlugin("nadena.dev.ndmf.InternalPasses").Run(OptiDisablerPass.Instance);
+        }
+
+        private void FindOptimizers()
+        {
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (Assembly assembly in assemblies)
+            {
+                Type[] types = GetTypes(assembly);
+                foreach (var type in types)
+                {
+                    if (!KnownOptimizers.Contains(type.FullName)) continue;
+                    optimizers.Add(type);
+                }
+            }
+        }
+
+        private Type[] GetTypes(Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                return e.Types;
+            }
+        }
+
+        internal static bool ShouldSkipOptimizer()
+        {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode) return false;
+            return EditorPrefs.GetBool(SkipKey, true) ? !ForceOpposite : ForceOpposite;
+        }
+
+        [MenuItem(MenuPath, false, 1)]
+        private static void ToggleSkipOptimizing()
+        {
+            bool current = EditorPrefs.GetBool(SkipKey, true);
+            EditorPrefs.SetBool(SkipKey, !current);
+        }
+
+        [MenuItem(MenuPath, true)]
+        private static bool ToggleSkipOptimizingValidate()
+        {
+            Menu.SetChecked(MenuPath, EditorPrefs.GetBool(SkipKey, true));
+            return true;
+        }
+
+        [MenuItem(BaseMenuPath + "Play With Optimizing", false, 2)]
+        private static void PlayWithOptimizing()
+        {
+            if (EditorPrefs.GetBool(SkipKey, true)) ForceOpposite = true;
+            EditorApplication.isPlaying = true;
+        }
+
+        [MenuItem(BaseMenuPath + "Play Without Optimizing", false, 3)]
+        private static void PlayWithoutOptimizing()
+        {
+            if (!EditorPrefs.GetBool(SkipKey, true)) ForceOpposite = true;
+            EditorApplication.isPlaying = true;
+        }
+    }
+
+    class OptiDisablerPass : Pass<OptiDisablerPass>
+    {
+        protected override void Execute(BuildContext context)
+        {
+            try
+            {
+                if (!OptimizerSkip.ShouldSkipOptimizer()) return;
+            }
+            finally
+            {
+                OptimizerSkip.ForceOpposite = false;
+            }
+
+            foreach (var type in OptimizerSkip.optimizers)
+            {
+                var optimizers = context.AvatarRootObject.GetComponentsInChildren(type, true);
+                foreach (var optimizer in optimizers)
+                {
+                    Object.DestroyImmediate(optimizer);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "dev.gotofinal.play-mode-benchmark",
+  "displayName": "Play mode benchmark",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Simple script to display time it took to enter play mode in logs.",
+  "vrchatVersion": "2022.1.1",
+  "author": {
+    "name": "GotoFinal",
+    "email": "gotofinal@gotofinal.com"
+  }
+}

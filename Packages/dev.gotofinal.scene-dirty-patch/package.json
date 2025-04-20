@@ -1,0 +1,15 @@
+{
+  "name": "dev.gotofinal.scene-dirty-patch",
+  "displayName": "PhysBones Scene Dirty Patch",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Patches PhysBones to not mark whole scene as dirty when touched, this seems to not break anything and speedup any tools that listen to scene dirty events.",
+  "vrchatVersion": "2022.1.1",
+  "author": {
+    "name": "GotoFinal",
+    "email": "gotofinal@gotofinal.com"
+  },
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.7.0"
+  }
+}
