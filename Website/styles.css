@@ -354,3 +354,14 @@ h1 {
 .flex-1 {
   flex: 1;
 }
+
+.caption1 {
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+fluent-data-grid-row,
+fluent-data-grid-cell {
+  height: auto !important;
+  overflow: visible !important;
+}

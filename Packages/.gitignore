@@ -1,6 +1,7 @@
 /*/
 !com.vrchat.core.*
 
+!dev.gotofinal.listing
 !dev.gotofinal.crunch-begone
 !dev.gotofinal.optimizer-control
 !dev.gotofinal.play-mode-benchmark

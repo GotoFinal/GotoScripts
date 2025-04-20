@@ -3,7 +3,7 @@
   "displayName": "Optimize only on Upload",
   "version": "1.0.0",
   "unity": "2022.3",
-  "description": "Makes popular optimizers only work on upload or when explictly requested. Makes going into play mode much quicker.\nSee Tools/GotTools for extra controls.",
+  "description": "Makes popular optimizers only work on upload or when explictly requested. Makes going into play mode much quicker. See Tools/GotTools for extra controls.",
   "vrchatVersion": "2022.1.1",
   "vpmDependencies": {
     "nadena.dev.ndmf": ">=1.6.0"
