@@ -1,0 +1,27 @@
+name: Batch Release
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'Comma‑separated list of PACKAGE_NAMEs to release'
+        required: false
+        default: '"dev.gotofinal.crunch-begone","dev.gotofinal.object-remover","dev.gotofinal.optimizer-control","dev.gotofinal.play-mode-benchmark","dev.gotofinal.scene-dirty-patch"'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(format('[{0}]', inputs.packages)) }}
+
+    steps:
+      - name: Trigger release workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/actions/workflows/release.yml/dispatches \
+            -d '{"ref":"main","inputs":{"PACKAGE_NAME":"${{ matrix.package }}"}}'
