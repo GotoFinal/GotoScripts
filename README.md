@@ -2,8 +2,11 @@
 
 This is small collection of Unity scripts I've made for vrchat to solve some small issues I had when creating avatars.  
 
+See the repository and add to VCC here: https://gotofinal.github.io/GotoScriptsVRC/  
+
 ※このドキュメント内の日本語翻訳はすべて自動翻訳です。  
 これは、VRChat用のアバターを作成する際に直面したいくつかの小さな問題を解決するために作成した、Unityスクリプトの小さなコレクションです。
+
 
 ## Crunch Begone
 Simple script that automatically disables crunch compression on all assets. 
