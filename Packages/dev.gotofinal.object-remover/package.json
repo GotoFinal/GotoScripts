@@ -1,0 +1,15 @@
+{
+  "name": "dev.gotofinal.object-remover",
+  "displayName": "Object remover",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Allows for removal of some objects or singular components on build while also hiding them from view in editor, this can either help you optimise the avatar with easy way to undo it or save a lot of build time by removing objects before other tools will try to process them. This has small advantage over just removing the object that its easier to re-add it on prefab variants.",
+  "vrchatVersion": "2022.1.1",
+  "vpmDependencies": {
+    "nadena.dev.ndmf": ">=1.6.0"
+  },
+  "author": {
+    "name": "GotoFinal",
+    "email": "gotofinal@gotofinal.com"
+  }
+}

@@ -1,0 +1,20 @@
+{
+    "name": "dev.gotofinal.object-remover.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:62ced99b048af7f4d8dfe4bed8373d76",
+        "GUID:5ce33783346c3124990afbe7b0390a06",
+        "GUID:43509fea55d54bf4999dc2edd9a68854"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
