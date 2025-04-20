@@ -3,12 +3,13 @@
 using UnityEditor;
 #endif
 using UnityEngine;
+using VRC.SDKBase;
 
 namespace GotoFinal.ObjectRemover
 {
     [ExecuteInEditMode]
     [AddComponentMenu("GotTools/Object Remover")]
-    public class ObjectRemoverComponent : MonoBehaviour
+    public class ObjectRemoverComponent : MonoBehaviour, IEditorOnly
     {
         public bool hideInHierarchy = true;
         public bool keepDisabled = true;

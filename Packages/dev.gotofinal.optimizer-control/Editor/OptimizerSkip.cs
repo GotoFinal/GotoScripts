@@ -142,6 +142,7 @@ namespace GotoFinal.OptimizerControl.Editor
                         Object.DestroyImmediate(componentEntry.component);
                     }
                 }
+                Object.DestroyImmediate(control);
             }
 
             foreach (var type in optimizersToDisable)

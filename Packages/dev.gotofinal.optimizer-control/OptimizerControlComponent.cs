@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using VRC.SDKBase;
 
 namespace GotoFinal.OptimizerControl
 {
     [ExecuteInEditMode]
     [AddComponentMenu("GotTools/Optimizer Control")]
-    public class OptimizerControlComponent : MonoBehaviour
+    public class OptimizerControlComponent : MonoBehaviour, IEditorOnly
     {
         [System.Serializable]
         public class ComponentEntry
