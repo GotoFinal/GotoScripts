@@ -35,7 +35,14 @@ This is example of my avatar when entering play with all optimizations enabled:
 ![image](https://github.com/user-attachments/assets/b46a4062-60b6-4a79-bc72-0dfe99e1d2cb)  
 And with optimizers disabled + light control disabled:   
 最適化とライト制御を無効にした状態の例：   
-![image](https://github.com/user-attachments/assets/98a2df71-9836-4be3-9a69-dee4fbdb25d6)
+![image](https://github.com/user-attachments/assets/98a2df71-9836-4be3-9a69-dee4fbdb25d6)  
+
+NDMF contains build-in tool to see how long each tool took from your build time, so you can enter play mode once and then look for anything you don't always need in play mode to exclude it using the Optimizer Control:  
+NDMFには、各ツールがビルド時間にどれだけ影響したかを確認できる内蔵ツールが含まれています。
+そのため、一度プレイモードに入って、プレイモードで常に必要ではないものを探し、それをOptimizer Controlで除外することができます。  
+![image](https://github.com/user-attachments/assets/20b84a7f-161e-4e2d-9ceb-94540eb4f66e)  ![image](https://github.com/user-attachments/assets/18970d02-ebb3-43bd-a0f4-de6065384c83)
+
+
 
 ## Object remover
 Allows for removal of some objects or singular components on build while also hiding them from view in editor, this can either help you optimise the avatar with easy way to undo it or save a lot of build time by removing objects before other tools will try to process them.  
